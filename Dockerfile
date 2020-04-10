@@ -119,7 +119,7 @@ RUN set -ex; \
     chown -R www-data:www-data /usr/src/wordpress
 
 # This is WordPress gets installed at first, courtesy of parent image
-# WORKDIR /usr/src/wordpress
+WORKDIR /usr/src/wordpress
 
 # Add configs for memcached and batcache 
 ADD bin/wp-config.sh /usr/local/bin/wp-config.sh
@@ -131,7 +131,9 @@ RUN chmod +x /usr/local/bin/wp-config.sh
 RUN /usr/local/bin/wp-config.sh
 
 # Put our application code onto the server
-ADD wp-content/ /usr/src/wordpress/wp-content/
+COPY wp-content/ /usr/src/wordpress/wp-content/
+
+WORKDIR /var/www/html
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
