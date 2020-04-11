@@ -121,6 +121,10 @@ RUN set -ex; \
 # This is WordPress gets installed at first, courtesy of parent image
 WORKDIR /usr/src/wordpress
 
+RUN mkdir -p wp-content/uploads
+
+RUN git https://github.com/palasthotel/use-memcached.git && mv use-memcached plugins/use-memcached
+
 # Add configs for memcached and batcache 
 ADD bin/wp-config.sh /usr/local/bin/wp-config.sh
 
@@ -131,7 +135,7 @@ RUN chmod +x /usr/local/bin/wp-config.sh
 RUN /usr/local/bin/wp-config.sh
 
 # Put our application code onto the server
-COPY wp-content/ /usr/src/wordpress/wp-content/
+# COPY wp-content/ /usr/src/wordpress/wp-content/
 
 WORKDIR /var/www/html
 
