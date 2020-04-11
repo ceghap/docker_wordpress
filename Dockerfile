@@ -18,6 +18,7 @@ RUN set -ex; \
     \
     apt-get update; \
     apt-get install -y --no-install-recommends \
+    git \
     libfreetype6-dev \
     libmemcached-dev \
     zlib1g-dev \
