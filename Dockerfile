@@ -18,7 +18,6 @@ RUN set -ex; \
     \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-    git \
     libfreetype6-dev \
     libmemcached-dev \
     zlib1g-dev \
@@ -119,12 +118,15 @@ RUN set -ex; \
     rm wordpress.tar.gz; \
     chown -R www-data:www-data /usr/src/wordpress
 
+RUN mkdir -p /usr/src/wordpress/wp-content/uploads
+
+RUN apt update && apt install -y git && git clone https://github.com/palasthotel/use-memcached.git /usr/src/wordpress/plugins/use-memcached
+
+RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    rm -rf /var/lib/apt/lists/*
+
 # This is WordPress gets installed at first, courtesy of parent image
 WORKDIR /usr/src/wordpress
-
-RUN mkdir -p wp-content/uploads
-
-RUN git https://github.com/palasthotel/use-memcached.git && mv use-memcached plugins/use-memcached
 
 # Add configs for memcached and batcache 
 ADD bin/wp-config.sh /usr/local/bin/wp-config.sh
