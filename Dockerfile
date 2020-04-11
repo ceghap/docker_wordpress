@@ -120,7 +120,7 @@ RUN set -ex; \
 
 RUN mkdir -p /usr/src/wordpress/wp-content/uploads
 
-RUN apt update && apt install -y git && git clone https://github.com/palasthotel/use-memcached.git /usr/src/wordpress/plugins/use-memcached
+RUN apt update && apt install -y git && git clone https://github.com/palasthotel/use-memcached.git /usr/src/wordpress/wp-content/plugins/use-memcached
 
 RUN apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     rm -rf /var/lib/apt/lists/*
